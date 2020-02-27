@@ -1,20 +1,12 @@
 import Foundation
 
-func absurd<T>(_ input: Never) -> T {
-    switch input { }
-}
+func absurd<T>(_ input: Never) -> T { }
 
-func absurd<T>(_ left: Never, _ right: Never) -> T {
-    switch (left, right) { }
-}
+func absurd<T>(_ left: Never, _ right: Never) -> T { }
 
-func absurd<T, U>(_ left: Never, _ right: U) -> T {
-    switch left { }
-}
+func absurd<T, U>(_ left: Never, _ right: U) -> T { }
 
-func absurd<T, U>(_ left: U, _ right: Never) -> T {
-    switch right { }
-}
+func absurd<T, U>(_ left: U, _ right: Never) -> T { }
 
 // Copyright (C) 2019 by Victor Bryksin <vbryksin@virtualmind.ru>
 // Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee
