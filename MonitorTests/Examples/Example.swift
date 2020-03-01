@@ -14,15 +14,11 @@ final class Example: XCTestCase {
             manager.startWorkDay()
         }
 
-        // No concurrency
-        repeat {
-            let ew = workerDispatcher.dispatchNext()
-            let em = managerDispatcher.dispatchNext()
-            if !ew && !em {
-                break
-            }
-        } while true
-
+        [managerDispatcher, workerDispatcher].XCTAwait(manager.workReady == 2)
+        
+        XCTAssertGreaterThan(manager.progress.count, 8)
+        
+        [managerDispatcher, workerDispatcher].XCTFinite()
     }
 
     func testHighConcurrency() {
@@ -36,10 +32,13 @@ final class Example: XCTestCase {
             manager.startWorkDay()
         }
 
-        // Manager thread has high pressure
-        while workerDispatcher.dispatchNext() { }
-        while managerDispatcher.dispatchNext() { }
+        managerDispatcher.simulatingHighConcurrency {
+            [managerDispatcher, workerDispatcher].XCTAwait(manager.workReady == 2)
+        }
         
+        XCTAssertLessThan(manager.progress.count, 8)
+        
+        [managerDispatcher, workerDispatcher].XCTFinite()
     }
 }
 

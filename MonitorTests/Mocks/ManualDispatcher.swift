@@ -30,7 +30,9 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
     @discardableResult
     func async(flags: DispatchingFlags, execute block: @escaping Action) -> Vanishable {
         let task = ScheduledTask(block: block, flags: flags, timeout: 0)
+        ManualDispatcher.invoke(joinPoint: .beforeScheduleInvocation, dispatcher: self)
         pendingTasks.append(task)
+        ManualDispatcher.invoke(joinPoint: .afterScheduleInvocation, dispatcher: self)
         return task
     }
     
@@ -39,13 +41,15 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
         let task = ScheduledTask(block: { virtualExecutionComplete = true },
                                  flags: flags,
                                  timeout: 0)
+        ManualDispatcher.invoke(joinPoint: .beforeScheduleInvocation, dispatcher: self)
         pendingTasks.append(task)
+        ManualDispatcher.invoke(joinPoint: .afterScheduleInvocation, dispatcher: self)
         while !virtualExecutionComplete {
             dispatchNext(timeInterval: 0)
         }
         ManualDispatcher.dispatchersStack.append((flags, self))
         defer { ManualDispatcher.dispatchersStack.removeLast() }
-        return try ManualDispatcher.run(block)
+        return try ManualDispatcher.run(block, dispatcher: self)
 
     }
 
@@ -54,7 +58,9 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
                flags: DispatchingFlags,
                execute block: @escaping Action) -> Vanishable {
         let task = ScheduledTask(block: block, flags: flags, timeout: timeout)
+        ManualDispatcher.invoke(joinPoint: .beforeScheduleInvocation, dispatcher: self)
         pendingTasks.append(task)
+        ManualDispatcher.invoke(joinPoint: .afterScheduleInvocation, dispatcher: self)
         return task
     }
 
@@ -120,7 +126,7 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
     private func executeInContext(blocks: [Action], flags: DispatchingFlags) {
         ManualDispatcher.dispatchersStack.append((flags, self))
         for block in blocks {
-            ManualDispatcher.run(block)
+            ManualDispatcher.run(block, dispatcher: self)
         }
         ManualDispatcher.dispatchersStack.removeLast()
     }
@@ -128,19 +134,19 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
     private func executeManyInContext(blocks: [[Action]], flags: DispatchingFlags) {
         ManualDispatcher.dispatchersStack.append((flags, self))
         for block in blocks.flatMap({ $0 }) {
-            ManualDispatcher.run(block)
+            ManualDispatcher.run(block, dispatcher: self)
         }
         ManualDispatcher.dispatchersStack.removeLast()
     }
     
-    private static func run<T>(_ block: () throws -> T) rethrows -> T {
-        ManualDispatcher.invoke(joinPoint: .beforeDispatchedEntityInvocation)
+    private static func run<T>(_ block: () throws -> T, dispatcher: ManualDispatcher) rethrows -> T {
+        ManualDispatcher.invoke(joinPoint: .beforeDispatchedEntityInvocation, dispatcher: dispatcher)
         do {
             let result = try block()
-            ManualDispatcher.invoke(joinPoint: .afterDispatchedEntitiyInvocation)
+            ManualDispatcher.invoke(joinPoint: .afterDispatchedEntitiyInvocation, dispatcher: dispatcher)
             return result
         } catch let error {
-            ManualDispatcher.invoke(joinPoint: .afterDispatchedEntitiyInvocation)
+            ManualDispatcher.invoke(joinPoint: .afterDispatchedEntitiyInvocation, dispatcher: dispatcher)
             throw error
         }
     }
@@ -160,9 +166,11 @@ extension ManualDispatcher {
     enum JoinPoint {
         case beforeDispatchedEntityInvocation
         case afterDispatchedEntitiyInvocation
+        case beforeScheduleInvocation
+        case afterScheduleInvocation
     }
     
-    static func introduce(in joinPoint: JoinPoint, invocation: @escaping Action) -> Cancelable {
+    static func introduce(in joinPoint: JoinPoint, invocation: @escaping Consumer<ManualDispatcher>) -> Cancelable {
         let tag = (0..<Int.max).first { !introductions.keys.contains($0) }!
         introductions[tag] = (joinPoint, invocation)
         return Token(tag: tag)
@@ -172,15 +180,15 @@ extension ManualDispatcher {
         introductions.removeValue(forKey: tag)
     }
     
-    private static func invoke(joinPoint: JoinPoint) {
+    private static func invoke(joinPoint: JoinPoint, dispatcher: ManualDispatcher) {
         for introduction in introductions.values {
             if introduction.0 == joinPoint {
-                introduction.1()
+                introduction.1(dispatcher)
             }
         }
     }
     
-    private static var introductions = [:] as [Int: (JoinPoint, Action)]
+    private static var introductions = [:] as [Int: (JoinPoint, Consumer<ManualDispatcher>)]
     
     private final class Token: Cancelable {
         init(tag: Int) {

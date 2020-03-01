@@ -114,6 +114,7 @@
 		E72829CB240BC9C9008BCA75 /* XCTAwait.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829CA240BC9C9008BCA75 /* XCTAwait.swift */; };
 		E72829CF240C0867008BCA75 /* XCTInvariant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829CE240C0867008BCA75 /* XCTInvariant.swift */; };
 		E72829D1240C0DE7008BCA75 /* XCTFinite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829D0240C0DE7008BCA75 /* XCTFinite.swift */; };
+		E72829D8240C3B85008BCA75 /* ManualDispatcher.HighConcurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829D7240C3B85008BCA75 /* ManualDispatcher.HighConcurrency.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -237,6 +238,7 @@
 		E72829CA240BC9C9008BCA75 /* XCTAwait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTAwait.swift; sourceTree = "<group>"; };
 		E72829CE240C0867008BCA75 /* XCTInvariant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTInvariant.swift; sourceTree = "<group>"; };
 		E72829D0240C0DE7008BCA75 /* XCTFinite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTFinite.swift; sourceTree = "<group>"; };
+		E72829D7240C3B85008BCA75 /* ManualDispatcher.HighConcurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualDispatcher.HighConcurrency.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -448,6 +450,7 @@
 		A5EBD5052291FBF300701AB9 /* MonitorTests */ = {
 			isa = PBXGroup;
 			children = (
+				E72829D6240C3B6F008BCA75 /* Simulators */,
 				E72829C9240BC9BC008BCA75 /* Asserts */,
 				A52D99EE2305E1050053D66D /* Examples */,
 				A52D99D82303F1620053D66D /* Operations */,
@@ -540,6 +543,14 @@
 				E72829D0240C0DE7008BCA75 /* XCTFinite.swift */,
 			);
 			path = Asserts;
+			sourceTree = "<group>";
+		};
+		E72829D6240C3B6F008BCA75 /* Simulators */ = {
+			isa = PBXGroup;
+			children = (
+				E72829D7240C3B85008BCA75 /* ManualDispatcher.HighConcurrency.swift */,
+			);
+			path = Simulators;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -748,6 +759,7 @@
 			files = (
 				A51EE48323101FBD00B278E9 /* ManualDispatcherTests.swift in Sources */,
 				A51EE4B023131F6300B278E9 /* Example4.swift in Sources */,
+				E72829D8240C3B85008BCA75 /* ManualDispatcher.HighConcurrency.swift in Sources */,
 				A5001DFE22BAA5E600106821 /* ManualDispatcher.swift in Sources */,
 				A51EE4942311AE1800B278E9 /* Example3.swift in Sources */,
 				A5EBD5182293E64C00701AB9 /* MonitorTests.swift in Sources */,

@@ -50,7 +50,7 @@ struct XCTNeverScope {
     }
     
     func ensure(in scope: () -> Void) {
-        let advice = ManualDispatcher.introduce(in: .afterDispatchedEntitiyInvocation) {
+        let advice = ManualDispatcher.introduce(in: .afterDispatchedEntitiyInvocation) { _ in
             for predicate in self.predicates {
                 XCTAssertFalse(predicate.condition(),
                                predicate.message(),
