@@ -112,7 +112,7 @@
 		E72829C6240BA27A008BCA75 /* Monitor+collect9.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829C5240BA27A008BCA75 /* Monitor+collect9.swift */; };
 		E72829C8240BC834008BCA75 /* Example7.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829C7240BC834008BCA75 /* Example7.swift */; };
 		E72829CB240BC9C9008BCA75 /* XCTAwait.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829CA240BC9C9008BCA75 /* XCTAwait.swift */; };
-		E72829CF240C0867008BCA75 /* XCTNever.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829CE240C0867008BCA75 /* XCTNever.swift */; };
+		E72829CF240C0867008BCA75 /* XCTInvariant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829CE240C0867008BCA75 /* XCTInvariant.swift */; };
 		E72829D1240C0DE7008BCA75 /* XCTFinite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829D0240C0DE7008BCA75 /* XCTFinite.swift */; };
 /* End PBXBuildFile section */
 
@@ -235,7 +235,7 @@
 		E72829C5240BA27A008BCA75 /* Monitor+collect9.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Monitor+collect9.swift"; sourceTree = "<group>"; };
 		E72829C7240BC834008BCA75 /* Example7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example7.swift; sourceTree = "<group>"; };
 		E72829CA240BC9C9008BCA75 /* XCTAwait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTAwait.swift; sourceTree = "<group>"; };
-		E72829CE240C0867008BCA75 /* XCTNever.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTNever.swift; sourceTree = "<group>"; };
+		E72829CE240C0867008BCA75 /* XCTInvariant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTInvariant.swift; sourceTree = "<group>"; };
 		E72829D0240C0DE7008BCA75 /* XCTFinite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTFinite.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -536,7 +536,7 @@
 			isa = PBXGroup;
 			children = (
 				E72829CA240BC9C9008BCA75 /* XCTAwait.swift */,
-				E72829CE240C0867008BCA75 /* XCTNever.swift */,
+				E72829CE240C0867008BCA75 /* XCTInvariant.swift */,
 				E72829D0240C0DE7008BCA75 /* XCTFinite.swift */,
 			);
 			path = Asserts;
@@ -763,7 +763,7 @@
 				E72829C8240BC834008BCA75 /* Example7.swift in Sources */,
 				E72829CB240BC9C9008BCA75 /* XCTAwait.swift in Sources */,
 				A5EBD52122942C3700701AB9 /* Subscriber.swift in Sources */,
-				E72829CF240C0867008BCA75 /* XCTNever.swift in Sources */,
+				E72829CF240C0867008BCA75 /* XCTInvariant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

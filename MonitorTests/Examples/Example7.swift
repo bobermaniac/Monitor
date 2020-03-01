@@ -9,8 +9,7 @@ final class Example7: XCTestCase {
         let shelf1 = DummyBookshelf(dispatcher: dispatcher, booksCount: 3, terminal: ())
         let shelf2 = DummyBookshelf(dispatcher: dispatcher, booksCount: 5, terminal: Bill())
         
-        XCTNever(shelf1.numberOfAbandonedDetected > 0, message: "Shelf 1 is abandoned") {
-        XCTNever(shelf2.numberOfAbandonedDetected > 0, message: "Shelf 2 is abandoned") {
+        XCTInvariant(shelf1.numberOfAbandonedDetected, shelf2.numberOfAbandonedDetected).ensure {
             var result: ([Book], (Void, Bill))?
             let lookingForBooks = dispatcher.sync(flags: .barrier) {
                 all(shelf1.search(), shelf2.search())
@@ -26,7 +25,7 @@ final class Example7: XCTestCase {
             lookingForBooks.cancel()
             
             [dispatcher].XCTFinite()
-        } }
+        }
     }
     
     func test_all_withFailFast() throws {
@@ -39,7 +38,7 @@ final class Example7: XCTestCase {
                                      booksCount: 2,
                                      terminal: Either<Void, Error>.right(Bill()))
         
-        XCTNever(shelf2.numberOfAbandonedDetected > 0, message: "Shelf 2 is abandoned") {
+        XCTInvariant(shelf2.numberOfAbandonedDetected).ensure {
             var result: ([Book], Either<(Void, Void), Error>)?
             let lookingForBooks = dispatcher.sync(flags: .barrier) {
                 all(shelf1.search(), shelf2.search())
