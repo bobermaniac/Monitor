@@ -65,7 +65,7 @@
 		A52EB493231F9C4E0093B501 /* ContextAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52EB492231F9C4E0093B501 /* ContextAccessor.swift */; };
 		A52EB4A1232130D80093B501 /* ReduceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52EB4A0232130D80093B501 /* ReduceMode.swift */; };
 		A52EB4B02324E3AA0093B501 /* TransferMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52EB4AF2324E3AA0093B501 /* TransferMode.swift */; };
-		A5407F6522BEBADB00F24D21 /* Future+all.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5407F6422BEBADB00F24D21 /* Future+all.swift */; };
+		A5407F6522BEBADB00F24D21 /* Monitor+collect.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5407F6422BEBADB00F24D21 /* Monitor+collect.swift */; };
 		A5407F6722BFF92F00F24D21 /* Future+any.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5407F6622BFF92F00F24D21 /* Future+any.swift */; };
 		A5407F6922C0B8B400F24D21 /* Monitor+homogeneusMix.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5407F6822C0B8B400F24D21 /* Monitor+homogeneusMix.swift */; };
 		A5407F6F22C2BA7F00F24D21 /* ReadPreferredReaderWriterLockThreadSafety.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5407F6E22C2BA7F00F24D21 /* ReadPreferredReaderWriterLockThreadSafety.swift */; };
@@ -102,6 +102,16 @@
 		A5EBD52B229599C900701AB9 /* Monitor+map.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EBD52A229599C900701AB9 /* Monitor+map.swift */; };
 		A5EBD52D22959D3100701AB9 /* MonitorTransformationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EBD52C22959D3100701AB9 /* MonitorTransformationTests.swift */; };
 		A5FDAB7222BA639B003ECB66 /* Monitor+transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FDAB7122BA639B003ECB66 /* Monitor+transfer.swift */; };
+		E72829B8240AF47E008BCA75 /* Monitor+collect2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829B7240AF47E008BCA75 /* Monitor+collect2.swift */; };
+		E72829BA240B0057008BCA75 /* Monitor+collect3.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829B9240B0057008BCA75 /* Monitor+collect3.swift */; };
+		E72829BC240B0236008BCA75 /* Monitor+collect4.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829BB240B0236008BCA75 /* Monitor+collect4.swift */; };
+		E72829BE240B03E3008BCA75 /* Monitor+collect5.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829BD240B03E3008BCA75 /* Monitor+collect5.swift */; };
+		E72829C0240B0622008BCA75 /* Monitor+collect6.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829BF240B0622008BCA75 /* Monitor+collect6.swift */; };
+		E72829C2240B07A1008BCA75 /* Monitor+collect7.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829C1240B07A1008BCA75 /* Monitor+collect7.swift */; };
+		E72829C4240BA095008BCA75 /* Monitor+collect8.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829C3240BA095008BCA75 /* Monitor+collect8.swift */; };
+		E72829C6240BA27A008BCA75 /* Monitor+collect9.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829C5240BA27A008BCA75 /* Monitor+collect9.swift */; };
+		E72829C8240BC834008BCA75 /* Example7.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829C7240BC834008BCA75 /* Example7.swift */; };
+		E72829CB240BC9C9008BCA75 /* XCTAwait.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829CA240BC9C9008BCA75 /* XCTAwait.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,7 +183,7 @@
 		A52EB492231F9C4E0093B501 /* ContextAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextAccessor.swift; sourceTree = "<group>"; };
 		A52EB4A0232130D80093B501 /* ReduceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReduceMode.swift; sourceTree = "<group>"; };
 		A52EB4AF2324E3AA0093B501 /* TransferMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferMode.swift; sourceTree = "<group>"; };
-		A5407F6422BEBADB00F24D21 /* Future+all.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Future+all.swift"; sourceTree = "<group>"; };
+		A5407F6422BEBADB00F24D21 /* Monitor+collect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Monitor+collect.swift"; sourceTree = "<group>"; };
 		A5407F6622BFF92F00F24D21 /* Future+any.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Future+any.swift"; sourceTree = "<group>"; };
 		A5407F6822C0B8B400F24D21 /* Monitor+homogeneusMix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Monitor+homogeneusMix.swift"; sourceTree = "<group>"; };
 		A5407F6E22C2BA7F00F24D21 /* ReadPreferredReaderWriterLockThreadSafety.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadPreferredReaderWriterLockThreadSafety.swift; sourceTree = "<group>"; };
@@ -213,6 +223,16 @@
 		A5EBD52A229599C900701AB9 /* Monitor+map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Monitor+map.swift"; sourceTree = "<group>"; };
 		A5EBD52C22959D3100701AB9 /* MonitorTransformationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorTransformationTests.swift; sourceTree = "<group>"; };
 		A5FDAB7122BA639B003ECB66 /* Monitor+transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Monitor+transfer.swift"; sourceTree = "<group>"; };
+		E72829B7240AF47E008BCA75 /* Monitor+collect2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Monitor+collect2.swift"; sourceTree = "<group>"; };
+		E72829B9240B0057008BCA75 /* Monitor+collect3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Monitor+collect3.swift"; sourceTree = "<group>"; };
+		E72829BB240B0236008BCA75 /* Monitor+collect4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Monitor+collect4.swift"; sourceTree = "<group>"; };
+		E72829BD240B03E3008BCA75 /* Monitor+collect5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Monitor+collect5.swift"; sourceTree = "<group>"; };
+		E72829BF240B0622008BCA75 /* Monitor+collect6.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Monitor+collect6.swift"; sourceTree = "<group>"; };
+		E72829C1240B07A1008BCA75 /* Monitor+collect7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Monitor+collect7.swift"; sourceTree = "<group>"; };
+		E72829C3240BA095008BCA75 /* Monitor+collect8.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Monitor+collect8.swift"; sourceTree = "<group>"; };
+		E72829C5240BA27A008BCA75 /* Monitor+collect9.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Monitor+collect9.swift"; sourceTree = "<group>"; };
+		E72829C7240BC834008BCA75 /* Example7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example7.swift; sourceTree = "<group>"; };
+		E72829CA240BC9C9008BCA75 /* XCTAwait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTAwait.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,7 +306,6 @@
 			isa = PBXGroup;
 			children = (
 				A5001E1D22BC207600106821 /* Future.swift */,
-				A5407F6422BEBADB00F24D21 /* Future+all.swift */,
 				A5407F6622BFF92F00F24D21 /* Future+any.swift */,
 				A5001E2422BCC93800106821 /* Observable.swift */,
 				A5001E2722BCDE6300106821 /* BackgroundTask.swift */,
@@ -341,6 +360,7 @@
 				A51EE4AF23131F6300B278E9 /* Example4.swift */,
 				A52EB475231AFD9B0093B501 /* Example5.swift */,
 				A52AB41123283D220057AA9A /* Example6.swift */,
+				E72829C7240BC834008BCA75 /* Example7.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -424,6 +444,7 @@
 		A5EBD5052291FBF300701AB9 /* MonitorTests */ = {
 			isa = PBXGroup;
 			children = (
+				E72829C9240BC9BC008BCA75 /* Asserts */,
 				A52D99EE2305E1050053D66D /* Examples */,
 				A52D99D82303F1620053D66D /* Operations */,
 				A52D99BE23017AAB0053D66D /* Vanishable */,
@@ -494,8 +515,25 @@
 				A52EB477231B273B0093B501 /* Monitor+rewireAll.swift */,
 				A51EE49723124AC300B278E9 /* Monitor+rewireSwitch.swift */,
 				A51EE48A23107FEC00B278E9 /* Monitor+distinct.swift */,
+				A5407F6422BEBADB00F24D21 /* Monitor+collect.swift */,
+				E72829B7240AF47E008BCA75 /* Monitor+collect2.swift */,
+				E72829B9240B0057008BCA75 /* Monitor+collect3.swift */,
+				E72829BB240B0236008BCA75 /* Monitor+collect4.swift */,
+				E72829BD240B03E3008BCA75 /* Monitor+collect5.swift */,
+				E72829BF240B0622008BCA75 /* Monitor+collect6.swift */,
+				E72829C1240B07A1008BCA75 /* Monitor+collect7.swift */,
+				E72829C3240BA095008BCA75 /* Monitor+collect8.swift */,
+				E72829C5240BA27A008BCA75 /* Monitor+collect9.swift */,
 			);
 			path = Operations;
+			sourceTree = "<group>";
+		};
+		E72829C9240BC9BC008BCA75 /* Asserts */ = {
+			isa = PBXGroup;
+			children = (
+				E72829CA240BC9C9008BCA75 /* XCTAwait.swift */,
+			);
+			path = Asserts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -624,6 +662,7 @@
 				A5001E2822BCDE6300106821 /* BackgroundTask.swift in Sources */,
 				A52EB47C231CEB1A0093B501 /* Types.swift in Sources */,
 				A574CAA322DE0DE50051E8F5 /* MutableValue.swift in Sources */,
+				E72829C0240B0622008BCA75 /* Monitor+collect6.swift in Sources */,
 				A5EBD5142291FC0300701AB9 /* Monitor.swift in Sources */,
 				A51EE48723107D0200B278E9 /* Weak.swift in Sources */,
 				A5001E2322BCC7D700106821 /* pass.swift in Sources */,
@@ -636,6 +675,8 @@
 				A51EE4B623141FE800B278E9 /* Monitor+rewire.swift in Sources */,
 				A52AB41423283D8B0057AA9A /* ObservableValue+AdditiveArithmetic.swift in Sources */,
 				A51EE478230F340100B278E9 /* Monitor+debounce.swift in Sources */,
+				E72829C2240B07A1008BCA75 /* Monitor+collect7.swift in Sources */,
+				E72829BA240B0057008BCA75 /* Monitor+collect3.swift in Sources */,
 				A574CA9222C74B6C0051E8F5 /* DoNotMerge.swift in Sources */,
 				A5407F6722BFF92F00F24D21 /* Future+any.swift in Sources */,
 				A51EE47A230F347400B278E9 /* DelayedDispatcing.swift in Sources */,
@@ -651,22 +692,27 @@
 				A52EB491231F9BFD0093B501 /* FreeContext.swift in Sources */,
 				A5001E0A22BBCD6F00106821 /* SafetyValve.swift in Sources */,
 				A51EE4AA2312839500B278E9 /* unreachable.swift in Sources */,
+				E72829C4240BA095008BCA75 /* Monitor+collect8.swift in Sources */,
 				A574CAAE22DF47ED0051E8F5 /* ObservableValue+Bool.swift in Sources */,
+				E72829B8240AF47E008BCA75 /* Monitor+collect2.swift in Sources */,
 				A52EB478231B273B0093B501 /* Monitor+rewireAll.swift in Sources */,
 				A52EB470231AE2990093B501 /* MonitorTerminalVoid.swift in Sources */,
 				A51EE4A22312828C00B278E9 /* second.swift in Sources */,
 				A5001E2522BCC93800106821 /* Observable.swift in Sources */,
 				A52EB4A1232130D80093B501 /* ReduceMode.swift in Sources */,
-				A5407F6522BEBADB00F24D21 /* Future+all.swift in Sources */,
+				A5407F6522BEBADB00F24D21 /* Monitor+collect.swift in Sources */,
+				E72829C6240BA27A008BCA75 /* Monitor+collect9.swift in Sources */,
 				A5001E0522BAD98A00106821 /* ConcurrencyLimiter.swift in Sources */,
 				A574CAA722DE2DC80051E8F5 /* SubsequentObservableValueFailed.swift in Sources */,
 				A5001E0C22BBCE3D00106821 /* LitteredStrategy.swift in Sources */,
 				A52EB474231AE6120093B501 /* MonitorEphemeralNever.swift in Sources */,
+				E72829BE240B03E3008BCA75 /* Monitor+collect5.swift in Sources */,
 				A52AB418232840D00057AA9A /* ObservableValue+FloatingPoint.swift in Sources */,
 				A5407F6922C0B8B400F24D21 /* Monitor+homogeneusMix.swift in Sources */,
 				A52EB487231DA86F0093B501 /* SynchronizedContext.swift in Sources */,
 				A5EBD5282295940C00701AB9 /* Monitor+transform.swift in Sources */,
 				A52D99B422FF490C0053D66D /* Vanishable+associate.swift in Sources */,
+				E72829BC240B0236008BCA75 /* Monitor+collect4.swift in Sources */,
 				A51EE4A82312836C00B278E9 /* alwaysFalse.swift in Sources */,
 				A51EE49A23127F1B00B278E9 /* absurd.swift in Sources */,
 				A5FDAB7222BA639B003ECB66 /* Monitor+transfer.swift in Sources */,
@@ -707,6 +753,8 @@
 				A52D99C023017ABA0053D66D /* VanishableAssociateTests.swift in Sources */,
 				A52AB41223283D220057AA9A /* Example6.swift in Sources */,
 				A52D99F02305E1160053D66D /* Example2.swift in Sources */,
+				E72829C8240BC834008BCA75 /* Example7.swift in Sources */,
+				E72829CB240BC9C9008BCA75 /* XCTAwait.swift in Sources */,
 				A5EBD52122942C3700701AB9 /* Subscriber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

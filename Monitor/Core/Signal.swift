@@ -12,6 +12,10 @@ public struct Signal<Ephemeral, Terminal> {
         return (monitor, Signal(monitor: monitor, feed: feed))
     }
     
+    public var abandoned: Bool {
+        return feed.abandoned
+    }
+    
     private(set) public weak var monitor: Monitor<Ephemeral, Terminal>?
 
     public func emit(ephemeral: Ephemeral) {

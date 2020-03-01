@@ -107,11 +107,11 @@ final class Manager {
 
     func startWorkDay() {
         worker.startWork(initialProgress: 0, resultDispatcher: dispatcher)
-            .map(ephemeral: { Int($0 * 100) }, terminal: { $0 })
+            .map(ephemeral: { Int($0 * 100) }, terminal: { _ in })
             .observe(ephemeral: { self.progress.append($0) }, terminal: { self.workReady += 1})
             .associate(with: \.leftWork, of: self)
         worker.startWork(initialProgress: 0.5, resultDispatcher: dispatcher)
-            .map(ephemeral: { Int($0 * -100) }, terminal: { $0 })
+            .map(ephemeral: { Int($0 * -100) }, terminal: { _ in })
             .observe(ephemeral: { self.progress.append($0) }, terminal: { self.workReady += 2})
             .associate(with: \.rightWork, of: self)
     }

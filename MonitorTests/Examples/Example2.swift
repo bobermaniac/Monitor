@@ -53,7 +53,7 @@ private extension NetworkManager {
     }
 }
 
-struct OverallProgress {
+private struct OverallProgress {
     let partialProgress: [Int: Double]
 
     func update(index: Int, progress: Double) -> OverallProgress {
@@ -67,7 +67,7 @@ struct OverallProgress {
     }
 }
 
-struct Book {
+private struct Book {
     let id: String
     let title: String
 }

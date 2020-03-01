@@ -8,6 +8,7 @@ public enum Either<LeftType, RightType> {
 public protocol Result {
     associatedtype T
     func unwrap() throws -> T
+    func unwrapError() -> Error?
 }
 
 extension Either: Result where RightType == Error {
@@ -34,6 +35,11 @@ extension Either: Result where RightType == Error {
         case .right(let error):
             throw error
         }
+    }
+    
+    public func unwrapError() -> Error? {
+        guard case .right(let error) = self else { return nil }
+        return error
     }
     
     public typealias T = LeftType

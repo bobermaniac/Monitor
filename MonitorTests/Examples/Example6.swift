@@ -10,6 +10,7 @@ final class Example6: XCTestCase {
         let isPointOfCircle = sqrt(pow(x.observableValue, 2) + pow(y.observableValue, 2)) == 5
         let token = isPointOfCircle.observable.observe(ephemeral: { print($0) }, terminal: { _ in })
         XCTAssertTrue(try isPointOfCircle.unwrap())
+        XCTAssertNotNil(token)
 
         x.value = 0
         XCTAssertFalse(try isPointOfCircle.unwrap())

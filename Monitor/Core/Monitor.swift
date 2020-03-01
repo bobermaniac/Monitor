@@ -133,6 +133,10 @@ public struct Feed<Ephemeral, Terminal> {
         dispatcherMutator(monitor, dispatcher)
     }
     
+    public var abandoned: Bool {
+        return monitor == nil
+    }
+    
     public func addCancelationObserver(onCancel: @escaping Action) {
         guard let monitor = self.monitor else {
             onCancel()
