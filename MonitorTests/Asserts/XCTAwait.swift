@@ -46,7 +46,7 @@ extension Sequence where Element == ManualDispatcher {
     }
 }
 
-// Copyright (C) 2019 by Victor Bryksin <vbryksin@virtualmind.ru>
+// Copyright (C) 2020 by Victor Bryksin <vbryksin@virtualmind.ru>
 // Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee
 // is hereby granted.
 // THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE

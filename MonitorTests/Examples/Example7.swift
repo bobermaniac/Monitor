@@ -9,22 +9,24 @@ final class Example7: XCTestCase {
         let shelf1 = DummyBookshelf(dispatcher: dispatcher, booksCount: 3, terminal: ())
         let shelf2 = DummyBookshelf(dispatcher: dispatcher, booksCount: 5, terminal: Bill())
         
-        var result: ([Book], (Void, Bill))?
-        let lookingForBooks = dispatcher.sync(flags: .barrier) {
-            all(shelf1.search(), shelf2.search())
-                .scan(accumulator: [], ephemeralReducer: { $0 + [$1] }, terminalReducer: { ($0, $1) })
-                .observe(ephemeral: { _ in }, terminal: { result = $0 })
-        }
+        XCTNever(shelf1.numberOfAbandonedDetected > 0, message: "Shelf 1 is abandoned") {
+        XCTNever(shelf2.numberOfAbandonedDetected > 0, message: "Shelf 2 is abandoned") {
+            var result: ([Book], (Void, Bill))?
+            let lookingForBooks = dispatcher.sync(flags: .barrier) {
+                all(shelf1.search(), shelf2.search())
+                    .scan(accumulator: [], ephemeralReducer: { $0 + [$1] }, terminalReducer: { ($0, $1) })
+                    .observe(ephemeral: { _ in }, terminal: { result = $0 })
+            }
+            
+            [dispatcher].XCTAwait(result != nil, on: dispatcher)
+            
+            XCTAssertNotNil(result)
+            XCTAssertEqual(result?.0.count, 8)
         
-        [dispatcher].XCTAwait(result != nil, on: dispatcher)
-        
-        XCTAssertNotNil(result)
-        XCTAssertEqual(result?.0.count, 8)
-    
-        lookingForBooks.cancel()
-        
-        [dispatcher].XCTAwait(shelf1.numberOfAbandonedDetected == 0)
-        [dispatcher].XCTAwait(shelf2.numberOfAbandonedDetected == 0)
+            lookingForBooks.cancel()
+            
+            [dispatcher].XCTFinite()
+        } }
     }
     
     func test_all_withFailFast() throws {
@@ -37,23 +39,25 @@ final class Example7: XCTestCase {
                                      booksCount: 2,
                                      terminal: Either<Void, Error>.right(Bill()))
         
-        var result: ([Book], Either<(Void, Void), Error>)?
-        let lookingForBooks = dispatcher.sync(flags: .barrier) {
-            all(shelf1.search(), shelf2.search())
-                .scan(accumulator: [], ephemeralReducer: { $0 + [$1] }, terminalReducer: { ($0, $1) })
-                .observe(ephemeral: { _ in }, terminal: { result = $0 })
+        XCTNever(shelf2.numberOfAbandonedDetected > 0, message: "Shelf 2 is abandoned") {
+            var result: ([Book], Either<(Void, Void), Error>)?
+            let lookingForBooks = dispatcher.sync(flags: .barrier) {
+                all(shelf1.search(), shelf2.search())
+                    .scan(accumulator: [], ephemeralReducer: { $0 + [$1] }, terminalReducer: { ($0, $1) })
+                    .observe(ephemeral: { _ in }, terminal: { result = $0 })
+            }
+            
+            [dispatcher].XCTAwait(result != nil, on: dispatcher)
+            
+            XCTAssertNotNil(result)
+            XCTAssertNotNil(result?.1.unwrapError())
+            XCTAssertEqual(result?.0.count, 5)
+        
+            lookingForBooks.cancel()
+            
+            [dispatcher].XCTAwait(shelf1.numberOfAbandonedDetected == 1)
+            [dispatcher].XCTFinite()
         }
-        
-        [dispatcher].XCTAwait(result != nil, on: dispatcher)
-        
-        XCTAssertNotNil(result)
-        XCTAssertNotNil(result?.1.unwrapError())
-        XCTAssertEqual(result?.0.count, 5)
-    
-        lookingForBooks.cancel()
-        
-        [dispatcher].XCTAwait(shelf1.numberOfAbandonedDetected == 1)
-        [dispatcher].XCTAwait(shelf2.numberOfAbandonedDetected == 0)
     }
 }
 

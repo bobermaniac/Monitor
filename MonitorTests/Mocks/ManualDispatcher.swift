@@ -45,7 +45,7 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
         }
         ManualDispatcher.dispatchersStack.append((flags, self))
         defer { ManualDispatcher.dispatchersStack.removeLast() }
-        return try block()
+        return try ManualDispatcher.run(block)
 
     }
 
@@ -120,7 +120,7 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
     private func executeInContext(blocks: [Action], flags: DispatchingFlags) {
         ManualDispatcher.dispatchersStack.append((flags, self))
         for block in blocks {
-            block()
+            ManualDispatcher.run(block)
         }
         ManualDispatcher.dispatchersStack.removeLast()
     }
@@ -128,9 +128,21 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
     private func executeManyInContext(blocks: [[Action]], flags: DispatchingFlags) {
         ManualDispatcher.dispatchersStack.append((flags, self))
         for block in blocks.flatMap({ $0 }) {
-            block()
+            ManualDispatcher.run(block)
         }
         ManualDispatcher.dispatchersStack.removeLast()
+    }
+    
+    private static func run<T>(_ block: () throws -> T) rethrows -> T {
+        ManualDispatcher.invoke(joinPoint: .beforeDispatchedEntityInvocation)
+        do {
+            let result = try block()
+            ManualDispatcher.invoke(joinPoint: .afterDispatchedEntitiyInvocation)
+            return result
+        } catch let error {
+            ManualDispatcher.invoke(joinPoint: .afterDispatchedEntitiyInvocation)
+            throw error
+        }
     }
     
     static func == (lhs: ManualDispatcher, rhs: ManualDispatcher) -> Bool {
@@ -142,6 +154,47 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
     let simultaneousOperationCount: UInt8
     
     private static var dispatchersStack = [] as [(flags: DispatchingFlags, dispatcher: ManualDispatcher)]
+}
+
+extension ManualDispatcher {
+    enum JoinPoint {
+        case beforeDispatchedEntityInvocation
+        case afterDispatchedEntitiyInvocation
+    }
+    
+    static func introduce(in joinPoint: JoinPoint, invocation: @escaping Action) -> Cancelable {
+        let tag = (0..<Int.max).first { !introductions.keys.contains($0) }!
+        introductions[tag] = (joinPoint, invocation)
+        return Token(tag: tag)
+    }
+    
+    private static func detachIntroduction(at tag: Int) {
+        introductions.removeValue(forKey: tag)
+    }
+    
+    private static func invoke(joinPoint: JoinPoint) {
+        for introduction in introductions.values {
+            if introduction.0 == joinPoint {
+                introduction.1()
+            }
+        }
+    }
+    
+    private static var introductions = [:] as [Int: (JoinPoint, Action)]
+    
+    private final class Token: Cancelable {
+        init(tag: Int) {
+            self.tag = tag
+        }
+        
+        func cancel() {
+            guard let tag = tag else { return }
+            ManualDispatcher.detachIntroduction(at: tag)
+            self.tag = nil
+        }
+        
+        private var tag: Int?
+    }
 }
 
 private final class ScheduledTask: Vanishable, VanishEventObservable, Equatable {
