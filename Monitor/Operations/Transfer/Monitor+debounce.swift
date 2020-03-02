@@ -75,14 +75,15 @@ final class Debouncer<Ephemeral, Terminal>: MonitorTransforming {
 
     func cancel(sourceSubscription: Cancelable) {
         dispatcher.assertIsCurrent(flags: .barrier)
-        synchronizedContext.read(using: CalleeSyncGuaranteed()) { $0.activeTask?.cancel() }
+        synchronizedContext.readWrite(using: CalleeSyncGuaranteed()) { $0.previousTask = nil }
         sourceSubscription.cancel()
     }
 
     private func execute(block: @escaping Action, with threadSafety: ThreadSafetyStrategy) {
-        synchronizedContext.read(using: CalleeSyncGuaranteed()) { $0.activeTask?.cancel() }
-        dispatcher.async(after: timeout, flags: flags, execute: block)
-            .associate(with: \.activeTask, in: ContextAccessor(synchronizedContext, threadSafety: threadSafety))
+        let cancelable = dispatcher.async(after: timeout, flags: flags, execute: block)
+        synchronizedContext.readWrite(using: threadSafety) { state in
+            state.previousTask = cancelable
+        }
     }
 
     private let timeout: TimeInterval
@@ -95,7 +96,11 @@ final class Debouncer<Ephemeral, Terminal>: MonitorTransforming {
     private struct MutableState {
         init() { }
 
-        var activeTask: Vanishable?
+        var previousTask: Cancelable? {
+            willSet {
+                previousTask?.cancel()
+            }
+        }
     }
 }
 

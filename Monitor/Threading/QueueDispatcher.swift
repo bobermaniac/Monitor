@@ -23,10 +23,12 @@ private struct QueueDispatcher: Dispatching, DelayedDispatching {
         dispatchPrecondition(condition: .notOnQueue(queue))
     }
 
-    func async(flags: DispatchingFlags, execute block: @escaping Action) -> Vanishable {
-        let task = AsyncTask(block: block, flags: flags)
-        task.schedule(on: queue)
-        return task
+    func async(flags: DispatchingFlags, execute block: @escaping Action) -> Cancelable {
+        let workItem = DispatchWorkItem(qos: .default,
+                                        flags: DispatchWorkItemFlags(flags),
+                                        block: block)
+        queue.async(execute: workItem)
+        return CancelableWorkItem(workItem: workItem)
     }
 
     func sync<T>(flags: DispatchingFlags, execute block: () throws -> T) rethrows -> T {
@@ -35,13 +37,27 @@ private struct QueueDispatcher: Dispatching, DelayedDispatching {
 
     func async(after timeout: TimeInterval,
                flags: DispatchingFlags,
-               execute block: @escaping Action) -> Vanishable {
-        let task = AsyncTask(block: block, flags: flags)
-        task.schedule(after: timeout, on: queue)
-        return task
+               execute block: @escaping Action) -> Cancelable {
+        let workItem = DispatchWorkItem(qos: .default,
+                                        flags: DispatchWorkItemFlags(flags),
+                                        block: block)
+        queue.asyncAfter(deadline: .now() + .microseconds(Int(timeout * 1_000_000)), execute: workItem)
+        return CancelableWorkItem(workItem: workItem)
     }
 
     private let queue: DispatchQueue
+}
+
+private struct CancelableWorkItem: Cancelable {
+    init(workItem: DispatchWorkItem) {
+        self.workItem = workItem
+    }
+    
+    func cancel() {
+        workItem?.cancel()
+    }
+    
+    private weak var workItem: DispatchWorkItem?
 }
 
 private extension DispatchWorkItemFlags {
@@ -52,66 +68,6 @@ private extension DispatchWorkItemFlags {
             self = []
         }
     }
-}
-
-private final class AsyncTask: Vanishable, VanishEventObservable {
-    init(block: @escaping Action, flags: DispatchingFlags) {
-        self.block = block
-
-        // There is an intentional retain cycle
-        // It will be broken if:
-        // 1. callback is executed, or
-        // 2. invocation is canceled
-        workItem = DispatchWorkItem(qos: .default, flags: DispatchWorkItemFlags(flags), block: run)
-    }
-
-    var vanished: VanishEventObservable {
-        return self
-    }
-
-    func same(as vanishable: Vanishable) -> Bool {
-        guard let other = vanishable as? AsyncTask else { return false }
-        return other === self
-    }
-
-    func execute(callback: @escaping Consumer<Vanishable>) {
-        if workItem == nil {
-            callback(self)
-        } else {
-            vanishedCallbacks.append(callback)
-        }
-    }
-
-    func schedule(after timeInterval: TimeInterval, on queue: DispatchQueue) {
-        guard let workItem = self.workItem else { return }
-        queue.asyncAfter(deadline: .now() + .microseconds(Int(timeInterval * 1000000)), execute: workItem)
-    }
-
-    func schedule(on queue: DispatchQueue) {
-        guard let workItem = self.workItem else { return }
-        queue.async(execute: workItem)
-    }
-
-    func run() {
-        block()
-        finalize()
-    }
-
-    func cancel() {
-        workItem?.cancel()
-        finalize()
-    }
-
-    private func finalize() {
-        workItem = nil
-        for callback in vanishedCallbacks {
-            callback(self)
-        }
-    }
-
-    private var workItem: DispatchWorkItem?
-    private let block: Action
-    private var vanishedCallbacks = [] as [Consumer<Vanishable>]
 }
 
 // Copyright (C) 2019 by Victor Bryksin <vbryksin@virtualmind.ru>

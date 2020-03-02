@@ -8,7 +8,7 @@ public protocol Dispatching {
     func sync<T>(flags: DispatchingFlags, execute: () throws -> T) rethrows -> T
 
     @discardableResult
-    func async(flags: DispatchingFlags, execute: @escaping Action) -> Vanishable
+    func async(flags: DispatchingFlags, execute: @escaping Action) -> Cancelable
 }
 
 // Copyright (C) 2019 by Victor Bryksin <vbryksin@virtualmind.ru>

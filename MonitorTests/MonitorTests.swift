@@ -355,7 +355,7 @@ private final class DispatcherInterceptor: Dispatching {
         return try execute()
     }
 
-    func async(flags: DispatchingFlags, execute: @escaping Action) -> Vanishable {
+    func async(flags: DispatchingFlags, execute: @escaping Action) -> Cancelable {
         XCTFail("There should not be dispatcing in monitor")
         return Vanished()
     }

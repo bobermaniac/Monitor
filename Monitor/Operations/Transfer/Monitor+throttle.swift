@@ -81,23 +81,24 @@ final class Throttler<Ephemeral, Terminal>: MonitorTransforming {
         } as Bool
         if sheduleNextInvocation {
             let contextAccessor = ContextAccessor(synchronizedContext, threadSafety: threadSafety)
-            dispatcher.async(after: timeout, flags: flags, execute: { [feed] in
+            let cancelable = dispatcher.async(after: timeout, flags: flags, execute: { [feed] in
                 if let payload = contextAccessor.read(block: { $0.pendingInvocationStorage?.ephemeral }) {
                     feed.push(ephemeral: payload)
                 }
-            }).associate(with: \.pendingInvocation, in: contextAccessor)
+            })
+            contextAccessor.readWrite { $0.pendingInvocation = cancelable }
         }
     }
 
     func eat(terminal: Terminal) {
         dispatcher.assertIsCurrent(flags: [.barrier])
-        synchronizedContext.read(using: CalleeSyncGuaranteed()) { $0.pendingInvocation?.cancel() }
+        synchronizedContext.readWrite(using: CalleeSyncGuaranteed()) { $0.pendingInvocation = nil }
         feed.push(terminal: terminal)
     }
 
     func cancel(sourceSubscription: Cancelable) {
         dispatcher.assertIsCurrent(flags: .barrier)
-        synchronizedContext.read(using: CalleeSyncGuaranteed()) { $0.pendingInvocation?.cancel() }
+        synchronizedContext.readWrite(using: CalleeSyncGuaranteed()) { $0.pendingInvocation = nil }
         sourceSubscription.cancel()
     }
 
@@ -112,7 +113,10 @@ final class Throttler<Ephemeral, Terminal>: MonitorTransforming {
         init() { }
 
         var pendingInvocationStorage: MutableStorage?
-        var pendingInvocation: Vanishable? {
+        var pendingInvocation: Cancelable? {
+            willSet {
+                pendingInvocation?.cancel()
+            }
             didSet {
                 if pendingInvocation == nil {
                     pendingInvocationStorage = nil

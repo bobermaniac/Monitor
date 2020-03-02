@@ -28,7 +28,7 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
     }
 
     @discardableResult
-    func async(flags: DispatchingFlags, execute block: @escaping Action) -> Vanishable {
+    func async(flags: DispatchingFlags, execute block: @escaping Action) -> Cancelable {
         let task = ScheduledTask(block: block, flags: flags, timeout: 0)
         ManualDispatcher.invoke(joinPoint: .beforeScheduleInvocation, dispatcher: self)
         pendingTasks.append(task)
@@ -56,7 +56,7 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
     @discardableResult
     func async(after timeout: TimeInterval,
                flags: DispatchingFlags,
-               execute block: @escaping Action) -> Vanishable {
+               execute block: @escaping Action) -> Cancelable {
         let task = ScheduledTask(block: block, flags: flags, timeout: timeout)
         ManualDispatcher.invoke(joinPoint: .beforeScheduleInvocation, dispatcher: self)
         pendingTasks.append(task)

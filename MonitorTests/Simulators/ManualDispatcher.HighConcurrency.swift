@@ -38,7 +38,7 @@ private extension ManualDispatcher {
             if !isPopulating {
                 isPopulating = true
                 for _ in 0..<multiplier {
-                    dispatcher.async(flags: [], execute: {}).associate(with: \.pendingInvocations, of: self)
+                    dispatcher.async(flags: [], execute: {})
                 }
                 isPopulating = false
             }
@@ -47,12 +47,6 @@ private extension ManualDispatcher {
         func cancel() {
             interception?.cancel()
             interception = nil
-            
-            let invocations = pendingInvocations
-            pendingInvocations.removeAll()
-            for invocation in invocations {
-                invocation.cancel()
-            }
         
             let callbacks = completionCallbacks
             completionCallbacks.removeAll()
@@ -80,7 +74,6 @@ private extension ManualDispatcher {
         private let dispatcher: ManualDispatcher
         private let multiplier: UInt
         private var interception: Cancelable?
-        private var pendingInvocations = [] as [Vanishable]
         private var completionCallbacks = [] as [Consumer<Vanishable>]
         private var isPopulating = false
     }

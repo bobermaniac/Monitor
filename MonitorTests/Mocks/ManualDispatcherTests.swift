@@ -51,49 +51,34 @@ final class ManualDispatcherTests: XCTestCase {
     func test_asyncAfterInvocation_noFlags_run_whenDispatched_whenTimeout() {
         let dispatcher = ManualDispatcher()
         var executed = false
-        var vanished = false
         dispatcher.async(after: 2, flags: []) {
             dispatcher.assertIsCurrent(flags: [])
             executed = true
-        }.vanished.execute { _ in
-            dispatcher.assertIsCurrent(flags: [])
-            vanished = true
         }
 
         XCTAssertFalse(executed)
-        XCTAssertFalse(vanished)
         XCTAssertTrue(dispatcher.dispatchNext(timeInterval: 1))
         XCTAssertFalse(executed)
-        XCTAssertFalse(vanished)
         XCTAssertTrue(dispatcher.dispatchNext(timeInterval: 1))
         XCTAssertTrue(executed)
-        XCTAssertTrue(vanished)
         XCTAssertFalse(dispatcher.dispatchNext(timeInterval: 1))
     }
 
     func test_asyncAfterInvocation_noFlags_doesNotRun_whenCanceled_whenDispatched_whenTimeout() {
         let dispatcher = ManualDispatcher()
         var executed = false
-        var vanished = false
         let token = dispatcher.async(after: 2, flags: []) {
             dispatcher.assertIsCurrent(flags: [])
             executed = true
         }
-        token.vanished.execute { _ in
-            dispatcher.assertIsCurrent(flags: [.barrier])
-            vanished = true
-        }
 
         XCTAssertFalse(executed)
-        XCTAssertFalse(vanished)
         XCTAssertTrue(dispatcher.dispatchNext(timeInterval: 1))
         XCTAssertFalse(executed)
-        XCTAssertFalse(vanished)
 
         dispatcher.sync(flags: [.barrier]) {
             token.cancel()
         }
-        XCTAssertTrue(vanished)
 
         XCTAssertFalse(dispatcher.dispatchNext(timeInterval: 1))
         XCTAssertFalse(executed)
@@ -102,18 +87,13 @@ final class ManualDispatcherTests: XCTestCase {
     func test_asyncAfterInvocation_andAsyncInvocation_invokesInProperOrder() {
         let dispatcher = ManualDispatcher()
         var executedAfter = false
-        var vanishedAfter = false
         var executedAsync = false
         dispatcher.async(after: 2, flags: []) {
             dispatcher.assertIsCurrent(flags: [])
             executedAfter = true
-        }.vanished.execute { _ in
-            dispatcher.assertIsCurrent(flags: [])
-            vanishedAfter = true
         }
 
         XCTAssertFalse(executedAfter)
-        XCTAssertFalse(vanishedAfter)
 
         dispatcher.async(flags: []) {
             executedAsync = true
@@ -122,40 +102,31 @@ final class ManualDispatcherTests: XCTestCase {
         XCTAssertTrue(dispatcher.dispatchNext(timeInterval: 1))
         XCTAssertTrue(executedAsync)
         XCTAssertFalse(executedAfter)
-        XCTAssertFalse(vanishedAfter)
         XCTAssertTrue(dispatcher.dispatchNext(timeInterval: 1))
         XCTAssertTrue(executedAfter)
-        XCTAssertTrue(vanishedAfter)
         XCTAssertFalse(dispatcher.dispatchNext(timeInterval: 1))
     }
 
     func test_asyncAfterInvocation_andAsyncInvocation_simultaneously_invokesAfterFirst() {
         let dispatcher = ManualDispatcher()
         var executedAfter = false
-        var vanishedAfter = false
         var executedAsync = false
         dispatcher.async(after: 2, flags: []) {
             dispatcher.assertIsCurrent(flags: [])
             executedAfter = true
-            }.vanished.execute { _ in
-                dispatcher.assertIsCurrent(flags: [])
-                vanishedAfter = true
         }
 
         XCTAssertFalse(executedAfter)
-        XCTAssertFalse(vanishedAfter)
 
         XCTAssertTrue(dispatcher.dispatchNext(timeInterval: 1))
         dispatcher.async(flags: []) {
             executedAsync = true
         }
         XCTAssertFalse(executedAfter)
-        XCTAssertFalse(vanishedAfter)
         XCTAssertFalse(executedAsync)
 
         XCTAssertTrue(dispatcher.dispatchNext(timeInterval: 1))
         XCTAssertTrue(executedAfter)
-        XCTAssertTrue(vanishedAfter)
         XCTAssertFalse(executedAsync)
 
         XCTAssertTrue(dispatcher.dispatchNext(timeInterval: 1))

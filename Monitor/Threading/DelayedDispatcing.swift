@@ -7,7 +7,7 @@ public protocol DelayedDispatching {
     @discardableResult
     func async(after timeout: TimeInterval,
                flags: DispatchingFlags,
-               execute block: @escaping Action) -> Vanishable
+               execute block: @escaping Action) -> Cancelable
 }
 
 // Copyright (C) 2019 by Victor Bryksin <vbryksin@virtualmind.ru>
