@@ -6,7 +6,7 @@ final class FreeContext<Content> {
     }
 
     func read<Result>(block: (Content) throws -> Result) rethrows -> Result {
-        return try block(immutableCopy ?? content)
+        return try block(immutableCopy ?? content) 
     }
 
     func readWrite<Result>(block: (inout Content) throws -> Result) rethrows -> Result {

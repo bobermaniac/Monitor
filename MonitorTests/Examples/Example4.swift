@@ -10,7 +10,9 @@ final class Example4: XCTestCase {
         let downloader = AsyncDownloader(dispatcher: concurrentDownloadDispatcher)
         let decoder = AsyncDecoder(dispatcher: concurrentDecodeDispatcher)
 
-        let (fileIds, fileIdsFeed) = Monitor.make(of: String.self, Void.self)
+        let (fileIds, fileIdsFeed) = mainDispatcher.sync(flags: .barrier) {
+            Signal.make(of: String.self, Void.self, boundTo: mainDispatcher)
+        }
         let token = mainDispatcher.sync(flags: .barrier) {
             return fileIds.rewire(ephemeral: { downloader.download(fileId: $0, resolveDispatcher: mainDispatcher) })
                 .rewire(ephemeral: { decoder.decode(data: $0, resolveDispatcher: mainDispatcher) })
@@ -22,7 +24,7 @@ final class Example4: XCTestCase {
 
         mainDispatcher.sync(flags: [.barrier]) {
             for i in 0..<100 {
-                fileIdsFeed.push(ephemeral: "file_\(i)")
+                fileIdsFeed.emit(ephemeral: "file_\(i)")
             }
         }
 
@@ -33,7 +35,7 @@ final class Example4: XCTestCase {
         }
 
         mainDispatcher.sync(flags: .barrier) {
-            fileIdsFeed.push(terminal: ())
+            fileIdsFeed.terminate(with: ())
             token.cancel()
         }
     }
@@ -58,7 +60,7 @@ private final class AsyncDownloader {
         dispatcher.assertIsCurrent(flags: [])
         let result = Promise<ImageData>()
 
-        dispatcher.async(after: TimeInterval(arc4random() % 3 + 3), flags: []) {
+        dispatcher.async(after: TimeInterval(arc4random() % 3 + 3), flags: [.barrier]) {
             result.resolve(with: ImageData())
         }
 
@@ -83,7 +85,7 @@ private final class AsyncDecoder {
         dispatcher.assertIsCurrent(flags: [])
         let result = Promise<Image>()
 
-        dispatcher.async(after: TimeInterval(arc4random() % 2 + 1), flags: []) {
+        dispatcher.async(after: TimeInterval(arc4random() % 2 + 1), flags: [.barrier]) {
             result.resolve(with: Image())
         }
 

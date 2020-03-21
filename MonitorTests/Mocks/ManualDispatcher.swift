@@ -37,6 +37,9 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
     }
     
     func sync<T>(flags: DispatchingFlags, execute block: () throws -> T) rethrows -> T {
+        if ManualDispatcher.dispatchersStack.last?.dispatcher == self {
+            XCTFail("Deadlock detected: trying to schedule sync operation on current dispatcher")
+        }
         var virtualExecutionComplete = false
         let task = ScheduledTask(block: { virtualExecutionComplete = true },
                                  flags: flags,
@@ -87,7 +90,7 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
         guard case .execute(let block, let flags) = task.state else {
             fatalError("Inconsistent state")
         }
-        executeInContext(blocks: [block, task.cancel], flags: flags)
+        executeInContext(block: { block(); task.cancel() }, flags: flags)
         pendingTasks.remove(at: pendingTasks.firstIndex(of: task)!)
     }
 
@@ -112,29 +115,34 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
         if executingTasks.count == 1 {
             executeSingle(task: executingTasks.first!)
         } else {
-            let blocks = executingTasks.map { task -> [Action] in
+            let blocks = executingTasks.map { task -> Action in
                 guard case .execute(let block, _) = task.state else {
                     fatalError("Inconsistent state")
                 }
-                return [block, task.cancel]
+                return {
+                    block()
+                    task.cancel()
+                }
             }
             executeManyInContext(blocks: blocks, flags: [])
             pendingTasks.removeAll(where: executingTasks.contains)
         }
     }
 
-    private func executeInContext(blocks: [Action], flags: DispatchingFlags) {
+    private func executeInContext(block: Action, flags: DispatchingFlags) {
         ManualDispatcher.dispatchersStack.append((flags, self))
-        for block in blocks {
-            ManualDispatcher.run(block, dispatcher: self)
-        }
+        ManualDispatcher.run(block, dispatcher: self)
         ManualDispatcher.dispatchersStack.removeLast()
     }
 
-    private func executeManyInContext(blocks: [[Action]], flags: DispatchingFlags) {
+    private func executeManyInContext(blocks: [Action], flags: DispatchingFlags) {
         ManualDispatcher.dispatchersStack.append((flags, self))
-        for block in blocks.flatMap({ $0 }) {
-            ManualDispatcher.run(block, dispatcher: self)
+        for _ in 0..<blocks.count {
+            ManualDispatcher.invoke(joinPoint: .beforeDispatchedEntityInvocation, dispatcher: self)
+        }
+        ManualDispatcher.runSimultaneously(blocks)
+        for _ in 0..<blocks.count {
+            ManualDispatcher.invoke(joinPoint: .afterDispatchedEntitiyInvocation, dispatcher: self)
         }
         ManualDispatcher.dispatchersStack.removeLast()
     }
@@ -149,6 +157,22 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
             ManualDispatcher.invoke(joinPoint: .afterDispatchedEntitiyInvocation, dispatcher: dispatcher)
             throw error
         }
+    }
+    
+    private static func runSimultaneously(_ blocks: [Action]) {
+        let group = DispatchGroup()
+        let tasks = blocks.map { block -> Action in
+            group.enter()
+            return {
+                block()
+                group.leave()
+            }
+        }
+        let queue = DispatchQueue.global(qos: .default)
+        for task in tasks {
+            queue.async(execute: task)
+        }
+        return group.wait()
     }
     
     static func == (lhs: ManualDispatcher, rhs: ManualDispatcher) -> Bool {
@@ -205,7 +229,7 @@ extension ManualDispatcher {
     }
 }
 
-private final class ScheduledTask: Vanishable, VanishEventObservable, Equatable {
+private final class ScheduledTask: Cancelable, Equatable {
     static func ==(lhs: ScheduledTask, rhs: ScheduledTask) -> Bool {
         return lhs === rhs
     }
@@ -232,25 +256,6 @@ private final class ScheduledTask: Vanishable, VanishEventObservable, Equatable 
         }
     }
 
-    var vanished: VanishEventObservable {
-        return self
-    }
-
-    func execute(callback: @escaping Consumer<Vanishable>) {
-        if block == nil {
-            callback(self)
-        } else {
-            pendingCallbacks.append(callback)
-        }
-    }
-
-    func same(as vanishable: Vanishable) -> Bool {
-        guard let task = vanishable as? ScheduledTask else {
-            return false
-        }
-        return task === self
-    }
-
     func cancel() {
         block = nil
     }
@@ -270,18 +275,7 @@ private final class ScheduledTask: Vanishable, VanishEventObservable, Equatable 
     }
 
     private let flags: DispatchingFlags
-    private var block: (Action)? {
-        didSet {
-            if block == nil {
-                for callback in pendingCallbacks {
-                    callback(self)
-                }
-                pendingCallbacks.removeAll()
-            }
-        }
-    }
-    
-    private var pendingCallbacks = [] as [Consumer<Vanishable>]
+    private var block: Action?
     private var elapsedPendingTime: TimeInterval
 }
 

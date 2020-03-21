@@ -26,8 +26,9 @@ public final class Monitor<Ephemeral, Terminal> {
     }
 
     deinit {
-        dispatcher?.assertIsCurrent(flags: [.barrier])
+        // Deinit is always run once so we can skip dispatcher validation if it is not required
         guard case .pending(_, let finalizers) = state else { return }
+        dispatcher?.assertIsCurrent(flags: [.barrier])
         for finalizer in finalizers {
             finalizer()
         }
