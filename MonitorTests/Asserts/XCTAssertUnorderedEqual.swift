@@ -1,23 +1,13 @@
 import Foundation
 import XCTest
 
-extension Sequence where Element == ManualDispatcher {
-    func XCTFinite(maxNumberOfInvocations: UInt = 1000,
-                   file: StaticString = #file,
-                   line: UInt = #line) {
-        for _ in 0..<maxNumberOfInvocations {
-            var hasInvocation = false
-            for dispatcher in self {
-                hasInvocation = hasInvocation || dispatcher.dispatchNext(timeInterval: 1)
-            }
-            if !hasInvocation {
-                return
-            }
-        }
-        XCTFail("After \(maxNumberOfInvocations) there is still pending blocks",
-                file: file,
-                line: line)
-    }
+func XCTAssertUnorderedEqual<L: Collection, R: Collection>(
+    _ lhs: L,
+    _ rhs: R,
+    file: StaticString = #file,
+    line: UInt = #line
+) where L.Element == R.Element, L.Element: Comparable {
+    XCTAssertEqual(lhs.sorted(), rhs.sorted(), file: file, line: line)
 }
 
 // Copyright (C) 2020 by Victor Bryksin <vbryksin@virtualmind.ru>

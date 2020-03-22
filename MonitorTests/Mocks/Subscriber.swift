@@ -2,7 +2,8 @@ import Foundation
 import Monitor
 
 final class Subscriber<Ephemeral, Terminal> {
-    init(for monitor: Monitor<Ephemeral, Terminal>) {
+    init(for monitor: Monitor<Ephemeral, Terminal>, sync: Bool = false) {
+        self.sync = sync ? NSLock() : nil
         token = monitor.observe(ephemeral: eat, terminal: eat)
         token?.vanished.execute(callback: { [weak self] token in
             self?.vanishReceived = true
@@ -10,6 +11,8 @@ final class Subscriber<Ephemeral, Terminal> {
     }
 
     private func eat(ephemeral: Ephemeral) {
+        sync?.lock()
+        defer { sync?.unlock() }
         ephemerals.append(ephemeral)
     }
 
@@ -27,6 +30,7 @@ final class Subscriber<Ephemeral, Terminal> {
     var vanishReceived = false
 
     private var token: Vanishable?
+    private let sync: NSLock?
 }
 
 // Copyright (C) 2019 by Victor Bryksin <vbryksin@virtualmind.ru>

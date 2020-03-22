@@ -44,6 +44,22 @@ extension Sequence where Element == ManualDispatcher {
                   line: UInt = #line) {
         return XCTAwait(condition: condition, on: targetDispatcher, file: file, line: line)
     }
+    
+    func XCTAwaitEqual<T: Equatable>(_ lhs: @autoclosure @escaping () -> T,
+                                     _ rhs: @autoclosure @escaping () -> T,
+                                     file: StaticString = #file,
+                                     line: UInt = #line) {
+        return XCTAwait(condition: { lhs() == rhs() }, on: nil, file: file, line: line)
+    }
+    
+    func XCTAwaitUnorderedEqual<C1: Sequence, C2: Sequence>(
+        _ lhs: @autoclosure @escaping () -> C1,
+        _ rhs: @autoclosure @escaping () -> C2,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) where C1.Element == C2.Element, C1.Element: Comparable {
+        return XCTAwait(condition: { lhs().sorted() == rhs().sorted() }, on: nil, file: file, line: line)
+    }
 }
 
 // Copyright (C) 2020 by Victor Bryksin <vbryksin@virtualmind.ru>

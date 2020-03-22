@@ -115,6 +115,18 @@
 		E72829CF240C0867008BCA75 /* XCTInvariant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829CE240C0867008BCA75 /* XCTInvariant.swift */; };
 		E72829D1240C0DE7008BCA75 /* XCTFinite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829D0240C0DE7008BCA75 /* XCTFinite.swift */; };
 		E72829D8240C3B85008BCA75 /* ManualDispatcher.HighConcurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72829D7240C3B85008BCA75 /* ManualDispatcher.HighConcurrency.swift */; };
+		E74CD1912426137300C2DBAC /* MonitorMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD1902426137300C2DBAC /* MonitorMapTests.swift */; };
+		E74CD1932426144800C2DBAC /* MonitorFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD1922426144800C2DBAC /* MonitorFilterTests.swift */; };
+		E74CD1952426148E00C2DBAC /* MonitorScanningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD1942426148E00C2DBAC /* MonitorScanningTests.swift */; };
+		E74CD197242643A900C2DBAC /* MonitorExtendingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD196242643A900C2DBAC /* MonitorExtendingTests.swift */; };
+		E74CD19924264BB300C2DBAC /* MonitorFlatMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD19824264BB300C2DBAC /* MonitorFlatMappingTests.swift */; };
+		E74CD19B242667E800C2DBAC /* MonitorReduceFlatMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD19A242667E800C2DBAC /* MonitorReduceFlatMappingTests.swift */; };
+		E74CD19D24268C2900C2DBAC /* MonitorSwitchMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD19C24268C2900C2DBAC /* MonitorSwitchMappingTests.swift */; };
+		E74CD19F242768EE00C2DBAC /* MonitorRewireTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD19E242768EE00C2DBAC /* MonitorRewireTests.swift */; };
+		E74CD1A12427710400C2DBAC /* XCTAssertUnorderedEqual.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD1A02427710400C2DBAC /* XCTAssertUnorderedEqual.swift */; };
+		E74CD1A32427BE5500C2DBAC /* MonitorRewireAllTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD1A22427BE5500C2DBAC /* MonitorRewireAllTests.swift */; };
+		E74CD1A52427BF6900C2DBAC /* MonitorRewireSwitchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD1A42427BF6900C2DBAC /* MonitorRewireSwitchTests.swift */; };
+		E74CD1A72427EA7900C2DBAC /* MonitorDistinctTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD1A62427EA7900C2DBAC /* MonitorDistinctTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -239,6 +251,18 @@
 		E72829CE240C0867008BCA75 /* XCTInvariant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTInvariant.swift; sourceTree = "<group>"; };
 		E72829D0240C0DE7008BCA75 /* XCTFinite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTFinite.swift; sourceTree = "<group>"; };
 		E72829D7240C3B85008BCA75 /* ManualDispatcher.HighConcurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualDispatcher.HighConcurrency.swift; sourceTree = "<group>"; };
+		E74CD1902426137300C2DBAC /* MonitorMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorMapTests.swift; sourceTree = "<group>"; };
+		E74CD1922426144800C2DBAC /* MonitorFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorFilterTests.swift; sourceTree = "<group>"; };
+		E74CD1942426148E00C2DBAC /* MonitorScanningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorScanningTests.swift; sourceTree = "<group>"; };
+		E74CD196242643A900C2DBAC /* MonitorExtendingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorExtendingTests.swift; sourceTree = "<group>"; };
+		E74CD19824264BB300C2DBAC /* MonitorFlatMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorFlatMappingTests.swift; sourceTree = "<group>"; };
+		E74CD19A242667E800C2DBAC /* MonitorReduceFlatMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorReduceFlatMappingTests.swift; sourceTree = "<group>"; };
+		E74CD19C24268C2900C2DBAC /* MonitorSwitchMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorSwitchMappingTests.swift; sourceTree = "<group>"; };
+		E74CD19E242768EE00C2DBAC /* MonitorRewireTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorRewireTests.swift; sourceTree = "<group>"; };
+		E74CD1A02427710400C2DBAC /* XCTAssertUnorderedEqual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTAssertUnorderedEqual.swift; sourceTree = "<group>"; };
+		E74CD1A22427BE5500C2DBAC /* MonitorRewireAllTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorRewireAllTests.swift; sourceTree = "<group>"; };
+		E74CD1A42427BF6900C2DBAC /* MonitorRewireSwitchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorRewireSwitchTests.swift; sourceTree = "<group>"; };
+		E74CD1A62427EA7900C2DBAC /* MonitorDistinctTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorDistinctTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -353,6 +377,17 @@
 			isa = PBXGroup;
 			children = (
 				A52D99D92303F1760053D66D /* MonitorForwardTests.swift */,
+				E74CD1902426137300C2DBAC /* MonitorMapTests.swift */,
+				E74CD1922426144800C2DBAC /* MonitorFilterTests.swift */,
+				E74CD1942426148E00C2DBAC /* MonitorScanningTests.swift */,
+				E74CD196242643A900C2DBAC /* MonitorExtendingTests.swift */,
+				E74CD19824264BB300C2DBAC /* MonitorFlatMappingTests.swift */,
+				E74CD19A242667E800C2DBAC /* MonitorReduceFlatMappingTests.swift */,
+				E74CD19C24268C2900C2DBAC /* MonitorSwitchMappingTests.swift */,
+				E74CD19E242768EE00C2DBAC /* MonitorRewireTests.swift */,
+				E74CD1A22427BE5500C2DBAC /* MonitorRewireAllTests.swift */,
+				E74CD1A42427BF6900C2DBAC /* MonitorRewireSwitchTests.swift */,
+				E74CD1A62427EA7900C2DBAC /* MonitorDistinctTests.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -541,6 +576,7 @@
 				E72829CA240BC9C9008BCA75 /* XCTAwait.swift */,
 				E72829CE240C0867008BCA75 /* XCTInvariant.swift */,
 				E72829D0240C0DE7008BCA75 /* XCTFinite.swift */,
+				E74CD1A02427710400C2DBAC /* XCTAssertUnorderedEqual.swift */,
 			);
 			path = Asserts;
 			sourceTree = "<group>";
@@ -760,22 +796,34 @@
 				A51EE48323101FBD00B278E9 /* ManualDispatcherTests.swift in Sources */,
 				A51EE4B023131F6300B278E9 /* Example4.swift in Sources */,
 				E72829D8240C3B85008BCA75 /* ManualDispatcher.HighConcurrency.swift in Sources */,
+				E74CD1A72427EA7900C2DBAC /* MonitorDistinctTests.swift in Sources */,
 				A5001DFE22BAA5E600106821 /* ManualDispatcher.swift in Sources */,
 				A51EE4942311AE1800B278E9 /* Example3.swift in Sources */,
 				A5EBD5182293E64C00701AB9 /* MonitorTests.swift in Sources */,
+				E74CD19F242768EE00C2DBAC /* MonitorRewireTests.swift in Sources */,
 				A55498EA22E4D06200C5E8DA /* Example.swift in Sources */,
+				E74CD197242643A900C2DBAC /* MonitorExtendingTests.swift in Sources */,
+				E74CD1A12427710400C2DBAC /* XCTAssertUnorderedEqual.swift in Sources */,
 				A52EB476231AFD9B0093B501 /* Example5.swift in Sources */,
 				A5EBD52D22959D3100701AB9 /* MonitorTransformationTests.swift in Sources */,
+				E74CD1912426137300C2DBAC /* MonitorMapTests.swift in Sources */,
 				E72829D1240C0DE7008BCA75 /* XCTFinite.swift in Sources */,
 				A52D99DA2303F1760053D66D /* MonitorForwardTests.swift in Sources */,
 				A55498E822E4CB9600C5E8DA /* MonitorHeterogeneousMixTests.swift in Sources */,
+				E74CD19924264BB300C2DBAC /* MonitorFlatMappingTests.swift in Sources */,
+				E74CD19D24268C2900C2DBAC /* MonitorSwitchMappingTests.swift in Sources */,
+				E74CD1A32427BE5500C2DBAC /* MonitorRewireAllTests.swift in Sources */,
 				A52D99C023017ABA0053D66D /* VanishableAssociateTests.swift in Sources */,
+				E74CD1A52427BF6900C2DBAC /* MonitorRewireSwitchTests.swift in Sources */,
 				A52AB41223283D220057AA9A /* Example6.swift in Sources */,
+				E74CD19B242667E800C2DBAC /* MonitorReduceFlatMappingTests.swift in Sources */,
 				A52D99F02305E1160053D66D /* Example2.swift in Sources */,
 				E72829C8240BC834008BCA75 /* Example7.swift in Sources */,
 				E72829CB240BC9C9008BCA75 /* XCTAwait.swift in Sources */,
 				A5EBD52122942C3700701AB9 /* Subscriber.swift in Sources */,
+				E74CD1932426144800C2DBAC /* MonitorFilterTests.swift in Sources */,
 				E72829CF240C0867008BCA75 /* XCTInvariant.swift in Sources */,
+				E74CD1952426148E00C2DBAC /* MonitorScanningTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
