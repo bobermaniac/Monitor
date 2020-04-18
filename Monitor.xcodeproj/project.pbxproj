@@ -127,6 +127,9 @@
 		E74CD1A32427BE5500C2DBAC /* MonitorRewireAllTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD1A22427BE5500C2DBAC /* MonitorRewireAllTests.swift */; };
 		E74CD1A52427BF6900C2DBAC /* MonitorRewireSwitchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD1A42427BF6900C2DBAC /* MonitorRewireSwitchTests.swift */; };
 		E74CD1A72427EA7900C2DBAC /* MonitorDistinctTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD1A62427EA7900C2DBAC /* MonitorDistinctTests.swift */; };
+		E74CD1A92427F21B00C2DBAC /* MonitorCollectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD1A82427F21B00C2DBAC /* MonitorCollectTests.swift */; };
+		E74CD1AB24280A6500C2DBAC /* MonitorDebounceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD1AA24280A6500C2DBAC /* MonitorDebounceTests.swift */; };
+		E74CD1AD242810AE00C2DBAC /* ManualClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74CD1AC242810AE00C2DBAC /* ManualClock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -263,6 +266,9 @@
 		E74CD1A22427BE5500C2DBAC /* MonitorRewireAllTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorRewireAllTests.swift; sourceTree = "<group>"; };
 		E74CD1A42427BF6900C2DBAC /* MonitorRewireSwitchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorRewireSwitchTests.swift; sourceTree = "<group>"; };
 		E74CD1A62427EA7900C2DBAC /* MonitorDistinctTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorDistinctTests.swift; sourceTree = "<group>"; };
+		E74CD1A82427F21B00C2DBAC /* MonitorCollectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorCollectTests.swift; sourceTree = "<group>"; };
+		E74CD1AA24280A6500C2DBAC /* MonitorDebounceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorDebounceTests.swift; sourceTree = "<group>"; };
+		E74CD1AC242810AE00C2DBAC /* ManualClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualClock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -388,6 +394,8 @@
 				E74CD1A22427BE5500C2DBAC /* MonitorRewireAllTests.swift */,
 				E74CD1A42427BF6900C2DBAC /* MonitorRewireSwitchTests.swift */,
 				E74CD1A62427EA7900C2DBAC /* MonitorDistinctTests.swift */,
+				E74CD1A82427F21B00C2DBAC /* MonitorCollectTests.swift */,
+				E74CD1AA24280A6500C2DBAC /* MonitorDebounceTests.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -533,6 +541,7 @@
 			isa = PBXGroup;
 			children = (
 				A5EBD52022942C3700701AB9 /* Subscriber.swift */,
+				E74CD1AC242810AE00C2DBAC /* ManualClock.swift */,
 				A5001DFD22BAA5E600106821 /* ManualDispatcher.swift */,
 				A51EE48223101FBD00B278E9 /* ManualDispatcherTests.swift */,
 			);
@@ -808,13 +817,16 @@
 				A5EBD52D22959D3100701AB9 /* MonitorTransformationTests.swift in Sources */,
 				E74CD1912426137300C2DBAC /* MonitorMapTests.swift in Sources */,
 				E72829D1240C0DE7008BCA75 /* XCTFinite.swift in Sources */,
+				E74CD1AB24280A6500C2DBAC /* MonitorDebounceTests.swift in Sources */,
 				A52D99DA2303F1760053D66D /* MonitorForwardTests.swift in Sources */,
 				A55498E822E4CB9600C5E8DA /* MonitorHeterogeneousMixTests.swift in Sources */,
 				E74CD19924264BB300C2DBAC /* MonitorFlatMappingTests.swift in Sources */,
 				E74CD19D24268C2900C2DBAC /* MonitorSwitchMappingTests.swift in Sources */,
 				E74CD1A32427BE5500C2DBAC /* MonitorRewireAllTests.swift in Sources */,
 				A52D99C023017ABA0053D66D /* VanishableAssociateTests.swift in Sources */,
+				E74CD1A92427F21B00C2DBAC /* MonitorCollectTests.swift in Sources */,
 				E74CD1A52427BF6900C2DBAC /* MonitorRewireSwitchTests.swift in Sources */,
+				E74CD1AD242810AE00C2DBAC /* ManualClock.swift in Sources */,
 				A52AB41223283D220057AA9A /* Example6.swift in Sources */,
 				E74CD19B242667E800C2DBAC /* MonitorReduceFlatMappingTests.swift in Sources */,
 				A52D99F02305E1160053D66D /* Example2.swift in Sources */,

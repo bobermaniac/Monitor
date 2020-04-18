@@ -3,8 +3,13 @@ import Monitor
 import XCTest
 
 final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
-    init(name: String = "anonymous", simultaneousOperationCount: UInt8 = 1) {
+    let clock: ManualClock
+    
+    init(name: String = "anonymous",
+         simultaneousOperationCount: UInt8 = 1,
+         clock: ManualClock = ManualClock()) {
         self.name = name
+        self.clock = clock
         self.simultaneousOperationCount = simultaneousOperationCount
     }
     
@@ -29,7 +34,7 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
 
     @discardableResult
     func async(flags: DispatchingFlags, execute block: @escaping Action) -> Cancelable {
-        let task = ScheduledTask(block: block, flags: flags, timeout: 0)
+        let task = ScheduledTask(block: block, flags: flags, timeout: 0, clock: clock)
         ManualDispatcher.invoke(joinPoint: .beforeScheduleInvocation, dispatcher: self)
         pendingTasks.append(task)
         ManualDispatcher.invoke(joinPoint: .afterScheduleInvocation, dispatcher: self)
@@ -43,7 +48,8 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
         var virtualExecutionComplete = false
         let task = ScheduledTask(block: { virtualExecutionComplete = true },
                                  flags: flags,
-                                 timeout: 0)
+                                 timeout: 0,
+                                 clock: clock)
         ManualDispatcher.invoke(joinPoint: .beforeScheduleInvocation, dispatcher: self)
         pendingTasks.append(task)
         ManualDispatcher.invoke(joinPoint: .afterScheduleInvocation, dispatcher: self)
@@ -60,7 +66,7 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
     func async(after timeout: TimeInterval,
                flags: DispatchingFlags,
                execute block: @escaping Action) -> Cancelable {
-        let task = ScheduledTask(block: block, flags: flags, timeout: timeout)
+        let task = ScheduledTask(block: block, flags: flags, timeout: timeout, clock: clock)
         ManualDispatcher.invoke(joinPoint: .beforeScheduleInvocation, dispatcher: self)
         pendingTasks.append(task)
         ManualDispatcher.invoke(joinPoint: .afterScheduleInvocation, dispatcher: self)
@@ -69,14 +75,19 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
 
     @discardableResult
     func dispatchNext(timeInterval: TimeInterval = 0) -> Bool {
+        return dispatchNext(timeInterval: timeInterval, returnsTrueOnPendingInvocation: true)
+    }
+    
+    private func dispatchNext(timeInterval: TimeInterval, returnsTrueOnPendingInvocation: Bool) -> Bool {
+        clock.increment(by: timeInterval)
+
         if pendingTasks.isEmpty { return false }
         pendingTasks.removeAll { $0.state.isCanceled }
 
         if pendingTasks.isEmpty { return false }
-        pendingTasks.forEach { $0.eat(timeInterval: timeInterval) }
 
         let tasksReadyToBeExecuted = pendingTasks.filter { !$0.state.isPending }
-        if tasksReadyToBeExecuted.isEmpty { return true }
+        if tasksReadyToBeExecuted.isEmpty { return returnsTrueOnPendingInvocation }
 
         if simultaneousOperationCount == 1 {
             executeSingle(task: tasksReadyToBeExecuted.first!)
@@ -84,6 +95,14 @@ final class ManualDispatcher: Dispatching, DelayedDispatching, Equatable {
             executeMultiple(tasks: tasksReadyToBeExecuted)
         }
         return true
+    }
+    
+    @discardableResult
+    func dispatchUntil(timeInterval: TimeInterval) -> Bool {
+        clock.increment(by: timeInterval)
+        var dispatched = false
+        while dispatchNext(timeInterval: 0, returnsTrueOnPendingInvocation: false) { dispatched = true }
+        return dispatched
     }
 
     private func executeSingle(task: ScheduledTask) {
@@ -234,10 +253,11 @@ private final class ScheduledTask: Cancelable, Equatable {
         return lhs === rhs
     }
 
-    init(block: @escaping Action, flags: DispatchingFlags, timeout: TimeInterval) {
+    init(block: @escaping Action, flags: DispatchingFlags, timeout: TimeInterval, clock: ManualClock) {
         self.block = block
         self.flags = flags
-        self.elapsedPendingTime = timeout
+        self.scheduledInvocationTime = clock.currentTime + timeout
+        self.clock = clock
     }
 
     enum State {
@@ -260,23 +280,20 @@ private final class ScheduledTask: Cancelable, Equatable {
         block = nil
     }
 
-    func eat(timeInterval: TimeInterval) {
-        elapsedPendingTime -= timeInterval
-    }
-
     var state: State {
         guard let block = self.block else {
             return .canceled
         }
-        if elapsedPendingTime > 0 {
+        if scheduledInvocationTime > clock.currentTime {
             return .pending
         }
         return .execute(block: block, flags: flags)
     }
 
     private let flags: DispatchingFlags
+    private let clock: ManualClock
     private var block: Action?
-    private var elapsedPendingTime: TimeInterval
+    private var scheduledInvocationTime: TimeInterval
 }
 
 // Copyright (C) 2019 by Victor Bryksin <vbryksin@virtualmind.ru>
