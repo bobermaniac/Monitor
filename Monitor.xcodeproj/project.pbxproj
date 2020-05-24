@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		445B72F924708599000615E9 /* StrictOrderedSignal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445B72F824708599000615E9 /* StrictOrderedSignal.swift */; };
+		445B72FB2470866B000615E9 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445B72FA2470866B000615E9 /* Stack.swift */; };
+		445B72FD24708737000615E9 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445B72FC24708737000615E9 /* Queue.swift */; };
+		445B72FF247088B9000615E9 /* StrictOrderedSignalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445B72FE247088B9000615E9 /* StrictOrderedSignalTests.swift */; };
 		A5001DFE22BAA5E600106821 /* ManualDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5001DFD22BAA5E600106821 /* ManualDispatcher.swift */; };
 		A5001E0222BAB0ED00106821 /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5001E0122BAB0ED00106821 /* Either.swift */; };
 		A5001E0522BAD98A00106821 /* ConcurrencyLimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5001E0422BAD98A00106821 /* ConcurrencyLimiter.swift */; };
@@ -143,6 +147,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		445B72F824708599000615E9 /* StrictOrderedSignal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrictOrderedSignal.swift; sourceTree = "<group>"; };
+		445B72FA2470866B000615E9 /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		445B72FC24708737000615E9 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		445B72FE247088B9000615E9 /* StrictOrderedSignalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrictOrderedSignalTests.swift; sourceTree = "<group>"; };
 		A5001DFD22BAA5E600106821 /* ManualDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualDispatcher.swift; sourceTree = "<group>"; };
 		A5001E0122BAB0ED00106821 /* Either.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
 		A5001E0422BAD98A00106821 /* ConcurrencyLimiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrencyLimiter.swift; sourceTree = "<group>"; };
@@ -453,6 +461,8 @@
 				A574CB1122E3B2DC0051E8F5 /* TerminalInterceptor.swift */,
 				A52D99C323019B6A0053D66D /* OnDemand.swift */,
 				A51EE48623107D0200B278E9 /* Weak.swift */,
+				445B72FA2470866B000615E9 /* Stack.swift */,
+				445B72FC24708737000615E9 /* Queue.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -502,6 +512,7 @@
 				A5EBD5172293E64C00701AB9 /* MonitorTests.swift */,
 				A5EBD52C22959D3100701AB9 /* MonitorTransformationTests.swift */,
 				A55498E722E4CB9600C5E8DA /* MonitorHeterogeneousMixTests.swift */,
+				445B72FE247088B9000615E9 /* StrictOrderedSignalTests.swift */,
 				A5EBD5082291FBF300701AB9 /* Info.plist */,
 			);
 			path = MonitorTests;
@@ -521,6 +532,7 @@
 				A5EBD5272295940C00701AB9 /* Monitor+transform.swift */,
 				A574CA8322C3C7890051E8F5 /* Monitor+hetorogeneusMix.swift */,
 				A5407F6822C0B8B400F24D21 /* Monitor+homogeneusMix.swift */,
+				445B72F824708599000615E9 /* StrictOrderedSignal.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -733,6 +745,7 @@
 				A52D99F22305FA960053D66D /* Monitor+reduceFlatMap.swift in Sources */,
 				A52EB493231F9C4E0093B501 /* ContextAccessor.swift in Sources */,
 				A5A54AF922A5440B00EC87F7 /* Monitor+flatMap.swift in Sources */,
+				445B72FD24708737000615E9 /* Queue.swift in Sources */,
 				A52D99C423019B6A0053D66D /* OnDemand.swift in Sources */,
 				A51EE4B623141FE800B278E9 /* Monitor+rewire.swift in Sources */,
 				A52AB41423283D8B0057AA9A /* ObservableValue+AdditiveArithmetic.swift in Sources */,
@@ -747,6 +760,7 @@
 				A51EE4A02312827400B278E9 /* first.swift in Sources */,
 				A51EE48523107BA500B278E9 /* Vanished.swift in Sources */,
 				A5001E0E22BBD17C00106821 /* ThreadSafetyStrategy.swift in Sources */,
+				445B72FB2470866B000615E9 /* Stack.swift in Sources */,
 				A574CA9F22DE0B510051E8F5 /* ObservableValue.swift in Sources */,
 				A52EB489231DAC2B0093B501 /* Vanishable+associateInContext.swift in Sources */,
 				A574CA9422C74EB20051E8F5 /* Transferer.swift in Sources */,
@@ -780,6 +794,7 @@
 				A5FDAB7222BA639B003ECB66 /* Monitor+transfer.swift in Sources */,
 				A5EBD52B229599C900701AB9 /* Monitor+map.swift in Sources */,
 				A574CAA122DE0C250051E8F5 /* ObservableValueWasDisposed.swift in Sources */,
+				445B72F924708599000615E9 /* StrictOrderedSignal.swift in Sources */,
 				A51EE47D231008F900B278E9 /* QueueDispatcher.swift in Sources */,
 				A51EE48B23107FEC00B278E9 /* Monitor+distinct.swift in Sources */,
 				A5001E1322BBD6DE00106821 /* DispatcherThreadSafety.swift in Sources */,
@@ -806,6 +821,7 @@
 				A51EE4B023131F6300B278E9 /* Example4.swift in Sources */,
 				E72829D8240C3B85008BCA75 /* ManualDispatcher.HighConcurrency.swift in Sources */,
 				E74CD1A72427EA7900C2DBAC /* MonitorDistinctTests.swift in Sources */,
+				445B72FF247088B9000615E9 /* StrictOrderedSignalTests.swift in Sources */,
 				A5001DFE22BAA5E600106821 /* ManualDispatcher.swift in Sources */,
 				A51EE4942311AE1800B278E9 /* Example3.swift in Sources */,
 				A5EBD5182293E64C00701AB9 /* MonitorTests.swift in Sources */,
