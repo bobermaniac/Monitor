@@ -2,7 +2,7 @@ import Foundation
 import XCTest
 
 extension Sequence where Element == ManualDispatcher {
-    func XCTAwait(condition: @escaping () -> Bool,
+    func XCTAwait(condition: () -> Bool,
                   on targetDispatcher: ManualDispatcher?,
                   file: StaticString = #file,
                   line: UInt = #line) {
@@ -32,29 +32,29 @@ extension Sequence where Element == ManualDispatcher {
         XCTAssertTrue(condition(), "await condition does not met", file: file, line: line)
     }
     
-    func XCTAwait(_ condition: @autoclosure @escaping () -> Bool,
+    func XCTAwait(_ condition: @autoclosure () -> Bool,
                   file: StaticString = #file,
                   line: UInt = #line) {
         return XCTAwait(condition: condition, on: nil, file: file, line: line)
     }
     
-    func XCTAwait(_ condition: @autoclosure @escaping () -> Bool,
+    func XCTAwait(_ condition: @autoclosure () -> Bool,
                   on targetDispatcher: ManualDispatcher,
                   file: StaticString = #file,
                   line: UInt = #line) {
         return XCTAwait(condition: condition, on: targetDispatcher, file: file, line: line)
     }
     
-    func XCTAwaitEqual<T: Equatable>(_ lhs: @autoclosure @escaping () -> T,
-                                     _ rhs: @autoclosure @escaping () -> T,
+    func XCTAwaitEqual<T: Equatable>(_ lhs: @autoclosure () -> T,
+                                     _ rhs: @autoclosure () -> T,
                                      file: StaticString = #file,
                                      line: UInt = #line) {
         return XCTAwait(condition: { lhs() == rhs() }, on: nil, file: file, line: line)
     }
     
     func XCTAwaitUnorderedEqual<C1: Sequence, C2: Sequence>(
-        _ lhs: @autoclosure @escaping () -> C1,
-        _ rhs: @autoclosure @escaping () -> C2,
+        _ lhs: @autoclosure () -> C1,
+        _ rhs: @autoclosure () -> C2,
         file: StaticString = #file,
         line: UInt = #line
     ) where C1.Element == C2.Element, C1.Element: Comparable {
